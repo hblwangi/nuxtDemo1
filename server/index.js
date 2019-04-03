@@ -4,6 +4,10 @@ const { Nuxt, Builder } = require('nuxt')
 
 const app = new Koa()
 
+const homeRouter = require("./router/home")
+
+app.use(homeRouter.routes(), homeRouter.allowedMethods())
+
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')
 config.dev = !(app.env === 'production')

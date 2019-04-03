@@ -107,6 +107,7 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import axios from 'axios'
 
 export default {
   data() {
@@ -124,6 +125,11 @@ export default {
           this.sliding = false
         }
   },
+  // async asyncData() {
+  //   await axios.get('http://localhost:3000/api/list', res => {
+  //     console.log(res)
+  //   })
+  // },
   components: {
     Logo
   }

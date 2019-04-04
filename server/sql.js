@@ -1,10 +1,36 @@
 const mysql      = require('mysql')
-const connection = mysql.createConnection({
-  host     : '148.66.139.56',   // 数据库地址
-  user     : 'hblwan1',    // 数据库用户
-  password : '6214392hbl',   // 数据库密码
-  port     : '3306',
-  database : 'nuxtTest'  // 选中数据库
-})
+var config = require('./config.js')
+
+var pool  = mysql.createPool({
+  host     : config.database.HOST,
+  user     : config.database.USERNAME,
+  password : config.database.PASSWORD,
+  port     : config.database.PORT,
+  database : config.database.DATABASE,
+  connectTimeout  : 60 * 60 * 1000,
+});
+
+
+const query = function( sql, values ) {
+  return new Promise(( resolve, reject ) => {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        reject( err )
+      } else {
+        connection.query(sql, values, ( err, rows) => {
+
+          if ( err ) {
+            reject( err )
+          } else {
+            resolve( rows )
+          }
+          connection.release()
+        })
+      }
+    })
+  })
+
+}
+
  
-module.exports = connection
+module.exports = query

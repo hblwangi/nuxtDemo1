@@ -79,26 +79,27 @@
       <!-- blog start -->
       <div class="blog" v-for="(item, idx) in list" :key="idx">
         <div class="blogHead clearFloat">
-          <div class="avatar"></div>
+          <div class="avatar">
+            <img src="../assets/images/avatar/3_whqet.jpg" alt="" width="100%">
+          </div>
           <div class="titleAndClassification">
-            <div class="title">HBL</div>
+            <div class="title">{{listdata.title}}</div>
             <div class="classification">dsadsa/sadsad/sdsad</div>
           </div>
         </div>
         <div class="blogBody">
-          <div class="blogImage"></div>
-          <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-        Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-        ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+          <div class="blogImage">
+            <img src="../assets/images/headimage/20140208175623375.jpg" alt="" width="100%">
+          </div>
+          <p>{{listdata.content}}</p>
         </div>
         <div class="blogFoot clearFloat">
-          <div class="look">123</div>
-          <div class="like">25</div>
+          <div class="look">{{listdata.look}}</div>
+          <div class="like">{{listdata.like}}</div>
           <div class="readAll">查看全文 >></div>
         </div>
       </div>
       <!-- blog end -->
-      
     </div>
     
     
@@ -106,7 +107,6 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 import axios from 'axios'
 
 export default {
@@ -114,6 +114,7 @@ export default {
     return {
       list : [1,2,3,4],
       slide: 0,
+      //listdata: null,
       sliding: null
     }
   },
@@ -125,14 +126,10 @@ export default {
           this.sliding = false
         }
   },
-  // async asyncData() {
-  //   await axios.get('http://localhost:3000/api/list', res => {
-  //     console.log(res)
-  //   })
-  // },
-  components: {
-    Logo
-  }
+  async asyncData() {
+    let data = await axios.get('http://localhost:3000/api/list');
+    return {listdata : data.data[0]}
+  },
 }
 </script>
 
@@ -167,6 +164,7 @@ export default {
   height: 3rem;
   background: #aaa;
   float: left;
+  overflow: hidden;
 }
 .blogHead .titleAndClassification{
   margin-left: 1.2rem;
@@ -187,6 +185,7 @@ export default {
   width: 100%;
   height: 18rem;
   background: #aaa;
+  overflow: hidden;
 }
 .blogBody p{
   margin-top: 1rem;

@@ -77,7 +77,7 @@ export default {
         function animation(){
           requestAnimationFrame(function(){
               if( document.documentElement.scrollTop > 0 ){
-                window.scroll(0, document.documentElement.scrollTop - speed)
+                window.scrollTo(0, document.documentElement.scrollTop - speed)
                 animation();
               } else {
                 return
